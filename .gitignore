@@ -4,3 +4,4 @@
 
 docker/mysql/storage/
 docker/mysql/dumps/
+docker/env_files/mysql.env

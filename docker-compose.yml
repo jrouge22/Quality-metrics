@@ -32,10 +32,6 @@ services:
   db:
     image: mysql:${MYSQL_IMAGE_TAG}
     container_name: quality_mysql
-    #command: --default-authentication-plugin=mysql_native_password
-    #restart: always
-    #environment:
-    #  MYSQL_ROOT_PASSWORD: root
     env_file:
       - docker/env_files/mysql.env
     volumes:
