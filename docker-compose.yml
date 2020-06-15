@@ -1,0 +1,44 @@
+version: "3.6"
+networks:
+  dashboard:
+    external: true
+
+volumes:
+  quality_data_cache: ~
+  quality_data_logs: ~
+
+services:
+  back:
+    build: ./docker/php-cli
+    container_name: quality_php-cli
+    working_dir: ${WWW_WORKDIR}
+    environment:
+      - SYMFONY_ENV=${APP_ENV}
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      # OPTIMISATION MAC : Permet de ne pas reporter en local les modifications dans docker
+      - "quality_data_cache:${WWW_WORKDIR}/var/cache:delegated"
+      - "quality_data_logs:${WWW_WORKDIR}/var/log:delegated"
+      - "${LOCAL_DIR_BACK}/:${WWW_WORKDIR}:cached"
+#      - "${LOCAL_DIR_SULU}/docker/php-cli/yyy-php.ini:/usr/local/etc/php/conf.d/yyy-php.ini"
+      - "${LOCAL_DIR_MYSQL}/dumps/:/tmp/dumps/"
+      # OPTIMISATION MAC : Permet de dire que les vendor sont modifiés dans le container
+      - "${LOCAL_DIR_BACK}/vendor:${WWW_WORKDIR}/vendor:delegated"
+    labels:
+      - "traefik.frontend.rule=Host:local.quality-back.fr"
+      - "traefik.frontend.entryPoints=http, https"
+    networks: ["dashboard"]
+  db:
+    image: mysql:${MYSQL_IMAGE_TAG}
+    container_name: quality_mysql
+    #command: --default-authentication-plugin=mysql_native_password
+    #restart: always
+    #environment:
+    #  MYSQL_ROOT_PASSWORD: root
+    env_file:
+      - docker/env_files/mysql.env
+    volumes:
+      - ${LOCAL_DIR_MYSQL}/storage/mysql:/var/lib/mysql
+      - ${LOCAL_DIR_MYSQL}/dumps/:/tmp/dumps/
+    networks: ["dashboard"]
