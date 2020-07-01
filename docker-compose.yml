@@ -25,6 +25,8 @@ services:
       - "${LOCAL_DIR_MYSQL}/dumps/:/tmp/dumps/"
       # OPTIMISATION MAC : Permet de dire que les vendor sont modifiés dans le container
       - "${LOCAL_DIR_BACK}/vendor:${WWW_WORKDIR}/vendor:delegated"
+      # Mise à jour de données php.ini
+      - "${LOCAL_DIR_PROJECT}/docker/php-cli/yyy-php.ini:/usr/local/etc/php/conf.d/yyy-php.ini"
     labels:
       - "traefik.frontend.rule=Host:local.quality-back.fr"
       - "traefik.frontend.entryPoints=http, https"
