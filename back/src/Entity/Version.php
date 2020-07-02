@@ -7,7 +7,11 @@ use App\Repository\VersionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
+ *
  * @ORM\Entity(repositoryClass=VersionRepository::class)
  */
 class Version

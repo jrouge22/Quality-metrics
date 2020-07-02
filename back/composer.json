@@ -14,7 +14,12 @@
         "symfony/yaml": "5.1.*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.19"
+        "phpmd/phpmd": "^2.8",
+        "phpspec/prophecy": "^1.10",
+        "sebastian/phpcpd": "^5.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "symfony/maker-bundle": "^1.19",
+        "symfony/phpunit-bridge": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
