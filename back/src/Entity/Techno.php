@@ -36,7 +36,12 @@ class Techno
     private $metrics;
 
     /**
-     * @ORM\OneToMany(targetEntity=Version::class, mappedBy="techno", orphanRemoval=true)
+     * @ORM\OneToMany(
+     *      targetEntity=Version::class,
+     *      mappedBy="techno",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     *  )
      */
     private $versions;
 
