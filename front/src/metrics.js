@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, CardActions, List, Datagrid } from 'react-admin';
+import { TextField, List, Datagrid } from 'react-admin';
 
 export const MetricList = (props) => (
     <List {...props}>

@@ -4,7 +4,6 @@ import {
 	TextField,
 	BooleanField,
 	DateField,
-	ReferenceField,
 	ReferenceManyField,
 	SingleFieldList,
 	ChipField,
@@ -18,7 +17,7 @@ export const TechnoList = props => (
 		<List {...props}>
 				<Datagrid>
 						<TextField source="name" label="Nom" />
-						<ReferenceManyField reference="versions" target="versions" sortBy="versions.versions" label="Versions">
+						<ReferenceManyField reference="versions" target="versions" label="Versions">
 								<SingleFieldList>
 										<ChipField source="version" />
 								</SingleFieldList>
