@@ -14,7 +14,7 @@ final class Version20200630115908 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Création des tables `metric`, `techno`, `techno_metric` et `version`';
     }
 
     public function up(Schema $schema) : void
