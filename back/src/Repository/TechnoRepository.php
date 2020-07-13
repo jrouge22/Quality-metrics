@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Techno;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -12,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Techno[]    findAll()
  * @method Techno[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TechnoRepository extends ServiceEntityRepository
+class TechnoRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

@@ -33,5 +33,7 @@ export default () => (
         <ResourceGuesser name="versions" list={VersionList} icon={versionIcon} />
 
         <ResourceGuesser name="projects" list={ProjectList} show={ProjectShow} create={ProjectCreate} icon={projectIcon} />
+
+        <ResourceGuesser name="project_metrics" />
     </HydraAdmin>
 );

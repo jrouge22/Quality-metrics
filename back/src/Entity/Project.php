@@ -157,7 +157,7 @@ class Project
     }
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\PrePersist
      */
     public function onPreUpdate()
     {
