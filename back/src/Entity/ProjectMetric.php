@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProjectMetric
 {
+    const TAG_ERROR = 'TAG_ERROR';
+    const TAG_BAD = 'TAG_BAD';
+    const TAG_OK = 'TAG_OK';
+    const TAG_NICE = 'TAG_NICE';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

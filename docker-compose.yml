@@ -19,11 +19,11 @@ services:
     volumes:
       # OPTIMISATION MAC : Permet de ne pas reporter en local les modifications dans docker
       - "quality_data_cache:${WWW_WORKDIR}/var/cache:delegated"
-      - "quality_data_logs:${LOCAL_DIR_BACK}/var/log:delegated"
+      - "quality_data_logs:${WWW_WORKDIR}/var/log:delegated"
       - "${LOCAL_DIR_BACK}/:${WWW_WORKDIR}:cached"
       - "${LOCAL_DIR_MYSQL}/dumps/:/tmp/dumps/"
       # OPTIMISATION MAC : Permet de dire que les vendor sont modifiés dans le container
-      - "${LOCAL_DIR_BACK}/vendor:${LOCAL_DIR_BACK}/vendor:delegated"
+      - "${LOCAL_DIR_BACK}/vendor:${WWW_WORKDIR}/vendor:delegated"
       # Mise à jour de données php.ini
       - "${LOCAL_DIR_PROJECT}/docker/php-cli/yyy-php.ini:/usr/local/etc/php/conf.d/yyy-php.ini"
     labels:

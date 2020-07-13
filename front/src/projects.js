@@ -4,15 +4,17 @@ import {
 	TextField,
 	BooleanField,
 	DateField,
+	ReferenceField,
 	ReferenceManyField,
+	ReferenceArrayField,
 	SingleFieldList,
 	ChipField,
 	Show,
 	Create,
 	SimpleForm,
 	TextInput,
-	SelectInput,
-	ReferenceInput,
+	SelectArrayInput,
+	ReferenceArrayInput,
 	SimpleShowLayout,
 	List,
 	ShowButton
@@ -23,11 +25,11 @@ export const ProjectList = props => (
 				<Datagrid>
 						<TextField source="name" label="Nom" />
 						<TextField source="code" label="Code Projet" />
-						<ReferenceManyField reference="versions" target="versions" label="Versions">
+						<ReferenceArrayField reference="versions" source="version" label="Versions" >
 								<SingleFieldList>
 										<ChipField source="version" />
 								</SingleFieldList>
-						</ReferenceManyField>
+						</ReferenceArrayField>
 						<DateField source="createdAt" locales="fr-FR" label="Date de création" />
 						<DateField source="updatedAt" locales="fr-FR" label="Fin de support" />
 					<ShowButton />
@@ -39,14 +41,18 @@ const ProjectTitle = ({ record }) => {
     return <span>Projet {record ? `"${record.name}"` : ''}</span>;
 };
 
+const optionRenderer = version => {
+	return `toto : ${version.techno} ${version.version}`;
+}
+
 export const ProjectShow = (props) => (
     <Show title={<ProjectTitle />} {...props}>
         <SimpleShowLayout>
             <TextField source="name" label="Nom" />
 						<TextField source="code" label="Code Projet" />
-						<ReferenceManyField
+						<ReferenceArrayField
 								reference="versions"
-								target="versions"
+								source="version"
 								label="Versions"
 						>
 								<Datagrid>
@@ -54,7 +60,22 @@ export const ProjectShow = (props) => (
 										<BooleanField source="isLts" label="Long Term Support" />
 										<DateField source="endSupport" locales="fr-FR" label="Fin de support" />
 								</Datagrid>
-						</ReferenceManyField>
+						</ReferenceArrayField>
+						<ReferenceArrayField
+								reference="project_metrics"
+								source="projectMetrics"
+								label="Métriques"
+						>
+								<Datagrid>
+										<ReferenceField reference="metrics" source="projectMetric.metric" label="Versions">
+												<SingleFieldList>
+														<ChipField source="name" label="Métrique" />
+												</SingleFieldList>
+										</ReferenceField>
+										<TextField source="value" label="Valeur" />
+										<TextField source="tag" label="Tag" />
+								</Datagrid>
+						</ReferenceArrayField>
 						<DateField source="createdAt" locales="fr-FR" label="Date de création" />
 						<DateField source="updatedAt" locales="fr-FR" label="Fin de support" />
         </SimpleShowLayout>
@@ -67,12 +88,13 @@ export const ProjectCreate = (props) => (
 				<SimpleForm redirect="show">
 						<TextInput source="name" label="Nom" />
 						<TextInput source="code" label="Code Projet" />
-						<ReferenceInput
-								source="versions"
-								reference="versions"
+						<ReferenceArrayInput
+							source="versions"
+							reference="versions"
+							label="Technos / Versions"
 						>
-						<SelectInput optionText="version" />
-						</ReferenceInput>
+							<SelectArrayInput optionText={optionRenderer} />
+						</ReferenceArrayInput>
 				</SimpleForm>
 		</Create>
 );
