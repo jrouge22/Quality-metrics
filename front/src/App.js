@@ -1,6 +1,13 @@
 import React from "react";
-import { HydraAdmin, fetchHydra, hydraDataProvider, ResourceGuesser } from "@api-platform/admin";
+import { Redirect, Route } from "react-router-dom";
 import { parseHydraDocumentation } from "@api-platform/api-doc-parser";
+import {
+  HydraAdmin,
+  ResourceGuesser,
+  hydraDataProvider as baseHydraDataProvider,
+  fetchHydra as baseFetchHydra
+} from "@api-platform/admin";
+import authProvider from './authProvider';
 import { MetricList } from './metrics';
 import { VersionList } from './versions';
 import { TechnoList, TechnoShow } from './technos';
@@ -14,26 +21,47 @@ import technoIcon from '@material-ui/icons/Whatshot';
 import projectIcon from '@material-ui/icons/Web';
 
 const entrypoint = process.env.REACT_APP_API_ENTRYPOINT;
+const fetchHeaders = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+const fetchHydra = (url, options = {}) => baseFetchHydra(url, {
+  ...options,
+  headers: new Headers(fetchHeaders),
+});
 
-const dataProvider = hydraDataProvider(
-    entrypoint,
-    fetchHydra,
-    parseHydraDocumentation,
-    true
-);
+const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint, { headers: new Headers(fetchHeaders) })
+  .then(
+    ({ api }) => ({ api }),
+    (result) => {
+      switch (result.status) {
+        case 401:
+          return Promise.resolve({
+            api: result.api,
+            customRoutes: [
+              <Route path="/" render={() => {
+                  return localStorage.getItem('token') ? window.location.reload() : <Redirect to="/login" />
+                }
+              } />
+            ],
+          });
+        default:
+          return Promise.reject(result);
+      }
+    },
+  );
+const dataProvider = baseHydraDataProvider(entrypoint, fetchHydra, apiDocumentationParser);
 
 export default () => (
-      <HydraAdmin
-        dashboard={ Dashboard }
-        dataProvider={ dataProvider }
-        entrypoint={ entrypoint }
-    >
-        <ResourceGuesser name="metrics" list={MetricList} icon={metricIcon} />
-        <ResourceGuesser name="technos" list={TechnoList} show={TechnoShow} icon={technoIcon} />
-        <ResourceGuesser name="versions" list={VersionList} icon={versionIcon} />
+  <HydraAdmin
+    dashboard={ Dashboard }
+    dataProvider={ dataProvider }
+    entrypoint={ entrypoint }
+    authProvider={authProvider}
+  >
+    <ResourceGuesser name="metrics" list={MetricList} icon={metricIcon} />
+    <ResourceGuesser name="technos" list={TechnoList} show={TechnoShow} icon={technoIcon} />
+    <ResourceGuesser name="versions" list={VersionList} icon={versionIcon} />
 
-        <ResourceGuesser name="projects" list={ProjectList} show={ProjectShow} create={ProjectCreate} icon={projectIcon} />
+    <ResourceGuesser name="projects" list={ProjectList} show={ProjectShow} create={ProjectCreate} icon={projectIcon} />
 
-        <ResourceGuesser name="project_metrics" />
-    </HydraAdmin>
+    <ResourceGuesser name="project_metrics" />
+  </HydraAdmin>
 );

@@ -7,7 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
-/reports/
+/config/jwt/
 ###< symfony/framework-bundle ###
 
 
@@ -17,3 +17,13 @@ composer.phar
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+
+### custom ###
+.env
+/reports/
+/data/

@@ -5,7 +5,6 @@ import {
 	BooleanField,
 	DateField,
 	ReferenceField,
-	ReferenceManyField,
 	ReferenceArrayField,
 	SingleFieldList,
 	ChipField,
