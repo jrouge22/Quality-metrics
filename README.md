@@ -12,9 +12,14 @@ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_
 openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 `
 6. Installez les vendor `composer install`
-7. Exécutez les migrations d'initialisation du projet `php bin/console doctrine:migration:migrate --no-interaction`
-8. Quittez le container back puis en local Lancez la commande `cd front & npm install` (si besoin mettez à jour npm sur votre environnement local)
-9. Exécutez la commande `yarn start` afin de lancer le front du projet
+7. Créer la base de données `php bin/console d:d:c`
+8. Exécutez les migrations d'initialisation du projet `php bin/console doctrine:migration:migrate --no-interaction`
+9. Créer un utilisateur de test via la commande `curl -X POST -H "Content-Type: application/json" "http://local.quality-back.fr/register?email=test5@mail.com&password=test2"`
+10. Utilisez les commandes d'initialisation des données
+`php bin/console app:data:initialize data/metrics.csv data/techno.csv`
+`php bin/console app:project:initialize data/projects.csv data/projectMetrics.csv`
+11. Quittez le container back puis en local Lancez la commande `cd front & npm install` (si besoin mettez à jour npm sur votre environnement local)
+12. Exécutez la commande `yarn start` afin de lancer le front du projet
 
 
 Pas dans le docker...
