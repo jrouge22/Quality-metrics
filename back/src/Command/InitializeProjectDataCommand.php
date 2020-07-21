@@ -3,48 +3,27 @@
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Command\LockableTrait;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Filesystem\Filesystem;
 use App\Entity\Metric;
 use App\Entity\Project;
 use App\Entity\ProjectMetric;
 use App\Entity\Version;
 
-class InitializeProjectDataCommand extends Command
+class InitializeProjectDataCommand extends AbstractImportCommand
 {
-    use LockableTrait;
-
     protected static $defaultName = 'app:project:initialize';
-
-    protected $projectDir;
-    protected $em;
 
     private $projectFile;
     private $metricProjectFile;
 
-    private $io;
-    private $fileSystem;
-
     private $versions;
     private $projects;
     private $metrics;
-
-    public function __construct(EntityManagerInterface $entityManager, KernelInterface $kernel)
-    {
-        $this->em = $entityManager;
-        $this->projectDir = $kernel->getProjectDir();
-
-        parent::__construct();
-    }
 
     protected function configure()
     {
@@ -57,21 +36,17 @@ class InitializeProjectDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+		parent::execute($input, $output);
+
+		$this->isLock();
+
         $this->projectFile = $this->projectDir . '/' . $input->getArgument('projectFile');
         $this->metricProjectFile = $this->projectDir . '/' . $input->getArgument('metricProjectFile');
 
-        $this->io = new SymfonyStyle($input, $output);
-
-        if (!$this->lock()) {
-            $this->io->caution('The command is already running in another process.');
-
-            return Command::SUCCESS;
-        }
 
         $this->io->title('Initialisation des données');
 
         $this->io->title('Vérification des fichiers');
-        $this->fileSystem = new Filesystem();
 
         if (!$this->isFileExist($this->projectFile)) {
             $this->io->error('Fichier `' . $this->projectFile . '` inexistant.');
@@ -97,15 +72,6 @@ class InitializeProjectDataCommand extends Command
 
         $this->io->success('Import terminé.');
         return Command::SUCCESS;
-    }
-
-    protected function isFileExist($file)
-    {
-        if ($this->fileSystem->exists($file)) {
-            return true;
-        }
-
-        return false;
     }
 
     protected function import($serializer, $file, $class)
