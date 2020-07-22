@@ -48,17 +48,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Create a new user
-     * @param $data
+     * @param $email
+     * @param $password
+     * @param $roles
      * @return User
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createNewUser(array $data): User
+
+    public function createNewUser($email, $password, array $roles): User
     {
         $user = new User();
         $user
-            ->setEmail($data['email'])
-            ->setPassword($this->encoder->encodePassword($user, $data['password']));
+            ->setEmail($email)
+            ->setPassword($this->encoder->encodePassword($user, $password))
+            ->setRoles($roles);
 
         $this->_em->persist($user);
         $this->_em->flush();

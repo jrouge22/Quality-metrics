@@ -14,7 +14,7 @@ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 6. Installez les vendor `composer install`
 7. Créer la base de données `php bin/console d:d:c`
 8. Exécutez les migrations d'initialisation du projet `php bin/console doctrine:migration:migrate --no-interaction`
-9. Créer un utilisateur de test via la commande `curl -X POST -H "Content-Type: application/json" "http://local.quality-back.fr/register?email=test5@mail.com&password=test2"`
+9. Créer un utilisateur de test via la commande `php bin/console test2@mail.com test2 app:user:create ROLE_ADMIN`
 10. Utilisez les commandes d'initialisation des données
 `php bin/console app:data:initialize data/metrics.csv data/techno.csv`
 `php bin/console app:project:initialize data/projects.csv data/projectMetrics.csv`
