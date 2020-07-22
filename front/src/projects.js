@@ -26,7 +26,7 @@ export const ProjectList = props => (
 						<TextField source="code" label="Code Projet" />
 						<ReferenceArrayField reference="versions" source="version" label="Versions" >
 								<SingleFieldList>
-										<ChipField source="version" />
+										<ChipField source="technoVersionName" />
 								</SingleFieldList>
 						</ReferenceArrayField>
 						<DateField source="createdAt" locales="fr-FR" label="Date de création" />

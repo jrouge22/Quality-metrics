@@ -96,4 +96,9 @@ class Version
 
         return $this;
     }
+
+    public function getTechnoVersionName(): ?string
+    {
+        return $this->techno->getName() . ' ' . $this->version;
+    }
 }
