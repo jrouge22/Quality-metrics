@@ -16,7 +16,8 @@ import {
   ReferenceArrayInput,
   SimpleShowLayout,
   List,
-  ShowButton
+  ShowButton,
+  EditButton
 } from 'react-admin';
 
 export const ProjectList = props => (
@@ -31,6 +32,7 @@ export const ProjectList = props => (
       </ReferenceArrayField>
       <DateField source="createdAt" locales="fr-FR" label="Date de création" />
       <DateField source="updatedAt" locales="fr-FR" label="Fin de support" />
+      <EditButton />
       <ShowButton />
     </Datagrid>
   </List>
