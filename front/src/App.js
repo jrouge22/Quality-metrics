@@ -14,6 +14,7 @@ import { TechnoList, TechnoShow } from './technos';
 import { ProjectList, ProjectShow, ProjectCreate } from './projects';
 import { ProjectMetricsList } from './projectMetrics';
 import Dashboard from './dashboard';
+import CustomLayout from './customLayout';
 
 // TODO : Recherche d'autres icones
 import metricIcon from '@material-ui/icons/Poll';
@@ -52,6 +53,7 @@ const dataProvider = baseHydraDataProvider(entrypoint, fetchHydra, apiDocumentat
 
 export default () => (
   <HydraAdmin
+    layout={CustomLayout}
     dashboard={ Dashboard }
     dataProvider={ dataProvider }
     entrypoint={ entrypoint }
