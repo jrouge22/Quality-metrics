@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\TechnoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,8 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={"order"={"name"}}
  * )
+ *
+ * @ApiFilter(OrderFilter::class, properties={"name"}, arguments={"orderParameterName"="order"})
  *
  * @ORM\Entity(repositoryClass=TechnoRepository::class)
  */

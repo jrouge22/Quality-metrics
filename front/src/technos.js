@@ -17,12 +17,12 @@ export const TechnoList = props => (
 		<List {...props}>
 				<Datagrid>
 						<TextField source="name" label="Nom" />
-						<ReferenceManyField reference="versions" target="versions" label="Versions">
+						<ReferenceManyField reference="versions" target="versions" label="Versions" sortable={false} >
 								<SingleFieldList>
 										<ChipField source="version" />
 								</SingleFieldList>
 						</ReferenceManyField>
-						<ReferenceManyField reference="metrics" target="metrics" label="Métriques">
+						<ReferenceManyField reference="metrics" target="metrics" label="Métriques" sortable={false} >
 								<SingleFieldList>
 										<ChipField source="name" />
 								</SingleFieldList>

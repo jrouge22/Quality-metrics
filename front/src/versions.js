@@ -4,7 +4,7 @@ import { TextField, BooleanField, DateField, ReferenceField, List, Datagrid } fr
 export const VersionList = props => (
     <List {...props}>
 				<Datagrid>
-						<ReferenceField source="techno" reference="technos">
+						<ReferenceField source="techno" reference="technos" sortable={false} >
 								<TextField source="name" label="Techno" />
 						</ReferenceField>
 						<TextField source="version" label="Version" />

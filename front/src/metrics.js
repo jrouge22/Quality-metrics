@@ -5,8 +5,8 @@ export const MetricList = (props) => (
     <List {...props}>
         <Datagrid>
                 <TextField source="name" label="Métrique" />
-                <TextField source="levelOk" label="Palier minimum" />
-                <TextField source="levelNice" label="Palier confort" />
+                <TextField source="levelOk" label="Palier minimum" sortable={false} />
+                <TextField source="levelNice" label="Palier confort" sortable={false} />
         </Datagrid>
     </List>
 );

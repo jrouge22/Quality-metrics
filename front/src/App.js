@@ -12,6 +12,7 @@ import { MetricList } from './metrics';
 import { VersionList } from './versions';
 import { TechnoList, TechnoShow } from './technos';
 import { ProjectList, ProjectShow, ProjectCreate } from './projects';
+import { ProjectMetricsList } from './projectMetrics';
 import Dashboard from './dashboard';
 
 // TODO : Recherche d'autres icones
@@ -62,6 +63,6 @@ export default () => (
 
     <ResourceGuesser name="projects" list={ProjectList} show={ProjectShow} create={ProjectCreate} icon={projectIcon} />
 
-    <ResourceGuesser name="project_metrics" />
+    <ResourceGuesser name="project_metrics" list={ProjectMetricsList} />
   </HydraAdmin>
 );

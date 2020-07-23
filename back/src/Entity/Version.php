@@ -3,14 +3,19 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\VersionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={"order"={"version"}}
  * )
+ *
+ * @ApiFilter(OrderFilter::class, properties={"version", "isLts", "endSupport"}, arguments={"orderParameterName"="order"})
  *
  * @ORM\Entity(repositoryClass=VersionRepository::class)
  */

@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"name"}})
+ * @ApiFilter(OrderFilter::class, properties={"name", "code", "createdAt", "updatedAt"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
  * @ORM\HasLifecycleCallbacks
  */

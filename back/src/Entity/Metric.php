@@ -3,15 +3,19 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\MetricRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={"order"={"name"}}
  * )
  *
+ * @ApiFilter(OrderFilter::class, properties={"name"}, arguments={"orderParameterName"="order"})
  * @ORM\Entity(repositoryClass=MetricRepository::class)
  */
 class Metric
