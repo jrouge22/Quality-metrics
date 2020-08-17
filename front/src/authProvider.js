@@ -25,13 +25,11 @@ const authProvider = {
     return Promise.resolve();
   },
   checkAuth: () => {
-    console.log('checkAuth');
     return localStorage.getItem('token')
     ? Promise.resolve()
     : Promise.reject()
   },
   checkError: (error) => {
-    console.log('checkError');
     const status = error.status;
     if (status === 401 || status === 403) {
       localStorage.removeItem('token');

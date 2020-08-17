@@ -18,6 +18,17 @@ class ProjectRepository extends AbstractRepository
         parent::__construct($registry, Project::class);
     }
 
+    public function findLastProjectMetricsForProject()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->leftJoin('p.projectMetrics', 'pm')
+            ->addSelect('pm')
+            ->andWhere('pm.createdAt = p.updatedAt')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

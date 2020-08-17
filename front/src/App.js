@@ -16,6 +16,8 @@ import { ProjectMetricsList } from './projectMetrics';
 import Dashboard from './dashboard';
 import CustomLayout from './customLayout';
 
+import customRoutes from './customRoutes';
+
 // TODO : Recherche d'autres icones
 import metricIcon from '@material-ui/icons/Poll';
 import versionIcon from '@material-ui/icons/Work';
@@ -35,6 +37,7 @@ const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint,
     (result) => {
       switch (result.status) {
         case 401:
+          localStorage.removeItem('token');
           return Promise.resolve({
             api: result.api,
             customRoutes: [
@@ -54,6 +57,7 @@ const dataProvider = baseHydraDataProvider(entrypoint, fetchHydra, apiDocumentat
 export default () => (
   <HydraAdmin
     layout={CustomLayout}
+    customRoutes={customRoutes}
     dashboard={ Dashboard }
     dataProvider={ dataProvider }
     entrypoint={ entrypoint }
