@@ -20,8 +20,3 @@ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 `php bin/console app:project:initialize data/projects.csv data/projectMetrics.csv`
 11. Quittez le container back puis en local Lancez la commande `cd front & npm install` (si besoin mettez à jour npm sur votre environnement local)
 12. Exécutez la commande `yarn start` afin de lancer le front du projet
-
-
-Pas dans le docker...
-openssl genrsa -out back/config/jwt/private.pem -aes256 4096
-openssl rsa -pubout -in back/config/jwt/private.pem -out back/config/jwt/public.pem
