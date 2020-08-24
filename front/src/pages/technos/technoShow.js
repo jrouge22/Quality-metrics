@@ -5,42 +5,19 @@ import {
 	BooleanField,
 	DateField,
 	ReferenceManyField,
-	SingleFieldList,
-	ChipField,
 	Show,
-	SimpleShowLayout,
-	List,
-	ShowButton
+	SimpleShowLayout
 } from 'react-admin';
-
-export const TechnoList = props => (
-		<List {...props}>
-				<Datagrid>
-						<TextField source="name" label="Nom" />
-						<ReferenceManyField reference="versions" target="versions" label="Versions" sortable={false} >
-								<SingleFieldList>
-										<ChipField source="version" />
-								</SingleFieldList>
-						</ReferenceManyField>
-						<ReferenceManyField reference="metrics" target="metrics" label="Métriques" sortable={false} >
-								<SingleFieldList>
-										<ChipField source="name" />
-								</SingleFieldList>
-						</ReferenceManyField>
-					<ShowButton />
-				</Datagrid>
-    </List>
-);
 
 const TechnoTitle = ({ record }) => {
     return <span>Techno {record ? `"${record.name}"` : ''}</span>;
 };
 
 export const TechnoShow = (props) => (
-    <Show title={<TechnoTitle />} {...props}>
-        <SimpleShowLayout>
-            <TextField source="id" />
-            <TextField source="name" label="Nom" />
+  <Show title={<TechnoTitle />} {...props}>
+    <SimpleShowLayout>
+      <TextField source="id" />
+      <TextField source="name" label="Nom" />
 			<ReferenceManyField
 				reference="versions"
 				target="versions"
@@ -63,6 +40,8 @@ export const TechnoShow = (props) => (
 					<TextField source="levelNice" label="Palier confort" />
 				</Datagrid>
 			</ReferenceManyField>
-        </SimpleShowLayout>
-    </Show>
+    </SimpleShowLayout>
+  </Show>
 );
+
+export default TechnoShow;

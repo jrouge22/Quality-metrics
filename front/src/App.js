@@ -8,21 +8,17 @@ import {
   fetchHydra as baseFetchHydra
 } from "@api-platform/admin";
 import authProvider from './authProvider';
-import { MetricList } from './metrics';
-import { VersionList } from './versions';
-import { TechnoList, TechnoShow } from './technos';
-import { ProjectList, ProjectShow, ProjectCreate } from './projects';
-import { ProjectMetricsList } from './projectMetrics';
-import Dashboard from './dashboard';
-import CustomLayout from './customLayout';
+
+import metrics from './pages/metrics';
+import projectMetrics from './pages/projectMetrics';
+import projects from './pages/projects';
+import technos from './pages/technos';
+import versions from './pages/versions';
+
+import Dashboard from './pages/dashboard';
+import CustomLayout from './layouts/customLayout';
 
 import customRoutes from './customRoutes';
-
-// TODO : Recherche d'autres icones
-import metricIcon from '@material-ui/icons/Poll';
-import versionIcon from '@material-ui/icons/Work';
-import technoIcon from '@material-ui/icons/Whatshot';
-import projectIcon from '@material-ui/icons/Web';
 
 const entrypoint = process.env.REACT_APP_API_ENTRYPOINT;
 const fetchHeaders = { Authorization: `Bearer ${localStorage.getItem('token')}` };
@@ -52,23 +48,24 @@ const apiDocumentationParser = entrypoint => parseHydraDocumentation(entrypoint,
       }
     },
   );
+
 const dataProvider = baseHydraDataProvider(entrypoint, fetchHydra, apiDocumentationParser);
 
 export default () => (
   <HydraAdmin
     layout={CustomLayout}
     customRoutes={customRoutes}
-    dashboard={ Dashboard }
-    dataProvider={ dataProvider }
-    entrypoint={ entrypoint }
+    dashboard={Dashboard}
+    dataProvider={dataProvider}
+    entrypoint={entrypoint}
     authProvider={authProvider}
   >
-    <ResourceGuesser name="metrics" list={MetricList} icon={metricIcon} />
-    <ResourceGuesser name="technos" list={TechnoList} show={TechnoShow} icon={technoIcon} />
-    <ResourceGuesser name="versions" list={VersionList} icon={versionIcon} />
+    <ResourceGuesser name="metrics" {...metrics} />
+    <ResourceGuesser name="technos" {...technos} />
+    <ResourceGuesser name="versions" {...versions} />
+    <ResourceGuesser name="projects" {...projects} />
+    <ResourceGuesser name="project_metrics" {...projectMetrics} />
 
-    <ResourceGuesser name="projects" list={ProjectList} show={ProjectShow} create={ProjectCreate} icon={projectIcon} />
-
-    <ResourceGuesser name="project_metrics" list={ProjectMetricsList} />
+    <ResourceGuesser name="show_metrics_projects" />
   </HydraAdmin>
 );

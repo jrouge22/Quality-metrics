@@ -6,37 +6,9 @@ import {
   DateField,
   ReferenceField,
   ReferenceArrayField,
-  SingleFieldList,
-  ChipField,
   Show,
-  Create,
-  SimpleForm,
-  TextInput,
-  SelectArrayInput,
-  ReferenceArrayInput,
   SimpleShowLayout,
-  List,
-  ShowButton,
-  EditButton
 } from 'react-admin';
-
-export const ProjectList = props => (
-  <List {...props}>
-    <Datagrid>
-      <TextField source="name" label="Nom" />
-      <TextField source="code" label="Code Projet" />
-      <ReferenceArrayField reference="versions" source="version" label="Versions" sortable={false} >
-        <SingleFieldList>
-          <ChipField source="technoVersionName" />
-        </SingleFieldList>
-      </ReferenceArrayField>
-      <DateField source="createdAt" locales="fr-FR" label="Date de création" />
-      <DateField source="updatedAt" locales="fr-FR" label="Fin de support" />
-      <EditButton />
-      <ShowButton />
-    </Datagrid>
-  </List>
-);
 
 const ProjectTitle = ({ record }) => {
   return <span>Projet {record ? `"${record.name}"` : ''}</span>;
@@ -77,19 +49,4 @@ export const ProjectShow = (props) => (
   </Show>
 );
 
-
-export const ProjectCreate = (props) => (
-  <Create {...props}>
-    <SimpleForm redirect="show">
-      <TextInput source="name" label="Nom" />
-      <TextInput source="code" label="Code Projet" />
-      <ReferenceArrayInput
-        source="version"
-        reference="versions"
-        label="Technos / Versions"
-      >
-        <SelectArrayInput optionText="technoVersionName" />
-      </ReferenceArrayInput>
-    </SimpleForm>
-  </Create>
-);
+export default ProjectShow;
